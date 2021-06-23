@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  Text("WELCOME TO EZRESTAURANT"),
+                  Text("WELCOME TO EZRESTAURANT", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
 
                   SizedBox(height: 30),
 
@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       onPressed: onLogin,
                       child: Text(
-                        "Login",
+                        "Sign In",
                         style: TextStyle(color: Colors.black, fontSize: 25),
                       ),
                       style: ButtonStyle(
@@ -157,15 +157,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   SizedBox(height: 20),
 
-                  Builder(
-                    builder: (context) => GestureDetector(
-                        child: Text("Dont have an account ? Sign up here"),
-                      onTap: ()=> Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterScreen()),
-                      ),
-                    ),
-                  )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+
+                      Text("Dont have an account ? "),
+
+                      Builder(
+                        builder: (context) => GestureDetector(
+                          child: Text("Sign up here", style: TextStyle(color: Colors.blue),),
+                          onTap: ()=> Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => RegisterScreen()),
+                          ),
+                        ),
+                      )
+
+                    ],
+                  ),
 
                 ],
               ),
