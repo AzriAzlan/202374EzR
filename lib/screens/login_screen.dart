@@ -1,7 +1,6 @@
 import 'package:ezrestaurantapp/screens/register_screen.dart';
 import 'package:ezrestaurantapp/services/auth.dart';
 import 'package:ezrestaurantapp/screens/home_screen.dart';
-import 'package:ezrestaurantapp/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
 
       home: Scaffold(

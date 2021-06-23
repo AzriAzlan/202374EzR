@@ -1,8 +1,15 @@
+import 'package:ezrestaurantapp/models/menuItem.dart';
 import 'package:ezrestaurantapp/screens/cart_screen.dart';
 import 'package:ezrestaurantapp/screens/favourite_screen.dart';
 import 'package:ezrestaurantapp/screens/login_screen.dart';
 import 'package:ezrestaurantapp/services/auth.dart';
 import 'package:flutter/material.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ezrestaurantapp/services/database.dart';
+import 'package:provider/provider.dart';
+
+import '../menu_list.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,173 +18,79 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  //final FirebaseFirestore firebase = FirebaseFirestore.instance;
   int _selectedIndex=0;
   final Authenticate _auth = Authenticate();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-    appBar: AppBar(
-  title: Text('EzRestaurant'),
-      automaticallyImplyLeading: false,
-      actions: <Widget>[
-        ElevatedButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Logout"),
-            onPressed: () async{
-              dynamic result = await _auth.signOut();
 
-              if(result==null) {
+    return StreamProvider<List<MenuItem>>.value(
+      value: DatabaseService().menu,
+      child: Scaffold(
+      appBar: AppBar(
+      title: Text('EzRestaurant'),
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          ElevatedButton.icon(
+              icon: Icon(Icons.person),
+              label: Text("Logout"),
+              onPressed: () async{
+                dynamic result = await _auth.signOut();
 
-                print("signout");
+                if(result==null) {
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              }
-            },
-        ),
-      ],
+                  print("signout");
 
-    ),
-      body: Container(
-
-        child: GridView.count(
-
-          primary: false,
-          padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          crossAxisCount: 4,
-
-          children: <Widget>[
-
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.add_shopping_cart),
-                        Icon(Icons.favorite,color:Colors.red)
-                      ],
-                    ),
-                    Icon(Icons.album,
-                    size: 100,),
-                    Text("Nasi Lemak"),
-
-                  ],
-                ),
-              ),
-              color: Colors.teal[100],
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.add_shopping_cart),
-                        Icon(Icons.favorite,color:Colors.red)
-                      ],
-                    ),
-                    Icon(Icons.album,
-                      size: 100,),
-                    Text("Mi Goreng"),
-
-                  ],
-                ),
-              ),
-              color: Colors.teal[200],
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.add_shopping_cart),
-                        Icon(Icons.favorite,color:Colors.red)
-                      ],
-                    ),
-                    Icon(Icons.album,
-                      size: 100,),
-                    Text("Ayam Goreng"),
-
-                  ],
-                ),
-              ),
-              color: Colors.teal[300],
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.add_shopping_cart),
-                        Icon(Icons.favorite,color:Colors.red)
-                      ],
-                    ),
-                    Icon(Icons.album,
-                      size: 100,),
-                    Text("Roti Canai"),
-
-                  ],
-                ),
-              ),
-              color: Colors.teal[400],
-            ),
-
-          ],
-
-        ),
-
-      ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favourites',
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                }
+              },
           ),
         ],
-      currentIndex: _selectedIndex,
-      onTap:  (_selectedIndex) {
-          switch(_selectedIndex) {
-            case 1: Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CartScreen()),
-            );
-              break;
 
-            case 2: Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FavouriteScreen()),
-            );
-
-          }
-      },
       ),
+        body: MenuList(),
 
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
 
-    );
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+            ),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: 'Cart',
+            ),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'Favourites',
+            ),
+          ],
+        currentIndex: _selectedIndex,
+        onTap:  (_selectedIndex) {
+            switch(_selectedIndex) {
+              case 1: Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+                break;
+
+              case 2: Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FavouriteScreen()),
+              );
+
+            }
+        },
+        ),
+
+    ),);
   }
 }
 

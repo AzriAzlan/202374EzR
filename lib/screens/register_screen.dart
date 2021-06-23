@@ -63,8 +63,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               MaterialPageRoute(builder: (context) => HomeScreen()),
                             );
                           }
-
-
                         },
 
                         child: Text("Sign UP")),
