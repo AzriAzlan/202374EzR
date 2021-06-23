@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "455019223199",
+    "project_id": "ezrestaurant-a6a42",
+    "storage_bucket": "ezrestaurant-a6a42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455019223199:android:f497dc5db6c5f13e966aaa",
+        "android_client_info": {
+          "package_name": "com.azriazlan.ezrestaurantapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455019223199-lcs4fn7i12drj8a7uca10jo2n79a3okp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBYf4gv-bTXdkXgG64vse1wuiQQv_H40U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455019223199-lcs4fn7i12drj8a7uca10jo2n79a3okp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
