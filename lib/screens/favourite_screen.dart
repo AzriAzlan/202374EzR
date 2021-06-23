@@ -1,46 +1,26 @@
 import 'package:ezrestaurantapp/screens/cart_screen.dart';
-import 'package:ezrestaurantapp/screens/favourite_screen.dart';
-import 'package:ezrestaurantapp/screens/login_screen.dart';
-import 'package:ezrestaurantapp/services/auth.dart';
+import 'package:ezrestaurantapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class FavouriteScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _FavouriteScreenState createState() => _FavouriteScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _FavouriteScreenState extends State<FavouriteScreen> {
 
-  int _selectedIndex=0;
-  final Authenticate _auth = Authenticate();
+  int _selectedIndex = 2;
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-    appBar: AppBar(
-  title: Text('EzRestaurant'),
-      automaticallyImplyLeading: false,
-      actions: <Widget>[
-        ElevatedButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Logout"),
-            onPressed: () async{
-              dynamic result = await _auth.signOut();
 
-              if(result==null) {
+      appBar: AppBar(
+        title: Text("My Favourites"),
+        automaticallyImplyLeading: false,
+      ),
 
-                print("signout");
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              }
-            },
-        ),
-      ],
-
-    ),
       body: Container(
 
         child: GridView.count(
@@ -65,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Icon(Icons.album,
-                    size: 100,),
+                      size: 100,),
                     Text("Nasi Lemak"),
 
                   ],
@@ -141,43 +121,47 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
 
-          BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
-          ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
+            ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favourites',
-          ),
-        ],
-      currentIndex: _selectedIndex,
-      onTap:  (_selectedIndex) {
-          switch(_selectedIndex) {
-            case 1: Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CartScreen()),
-            );
-              break;
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: 'Cart',
+            ),
 
-            case 2: Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FavouriteScreen()),
-            );
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'Favourites',
+            ),
+          ],
 
+          currentIndex: _selectedIndex,
+          onTap: (_selectedIndex) {
+            switch (_selectedIndex) {
+              case 0:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+                break;
+
+              case 1:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartScreen()),
+                );
+            }
           }
-      },
       ),
 
 
     );
+
+
   }
 }
-

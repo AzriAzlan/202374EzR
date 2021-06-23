@@ -1,5 +1,7 @@
-import 'package:ezrestaurantapp/provider/auth.dart';
+import 'package:ezrestaurantapp/screens/register_screen.dart';
+import 'package:ezrestaurantapp/services/auth.dart';
 import 'package:ezrestaurantapp/screens/home_screen.dart';
+import 'package:ezrestaurantapp/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
+  final Authenticate _auth = Authenticate();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -23,55 +26,78 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
 
-      body: Center(
-        child: Column(
+      home: Scaffold(
 
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text("WELCOME TO EZRESTAURANT"),
+        body: Center(
+          child: Column(
 
-            SizedBox(
-              width: 300,
-              child: TextField(
-                controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("WELCOME TO EZRESTAURANT"),
+
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(labelText: 'Username'),
+                ),
               ),
-            ),
 
-            SizedBox(
-              width: 300,
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  obscureText: true,
+                  controller: passwordController,
+                  decoration: InputDecoration(labelText: 'Password'),
+                ),
               ),
-            ),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            ElevatedButton(
-                onPressed: () {
-                  Authenticate.authenticate(usernameController.text,passwordController.text);
+              Builder(
+                builder: (context) =>
+                ElevatedButton(
+                    onPressed: () async{
 
+                      dynamic result = await _auth.signInEmail(usernameController.text,passwordController.text);
 
+                      if(result==null) {
+                        print("error signin");
+                      } else {
+                        print("signedin");
+                        print(result);
 
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder:(context)=>HomeScreen()),
-                  // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                        );
+                      }
 
-                },
-                child: Text("Sign in")),
+                  //sign in
+                      },
 
-            SizedBox(height: 20),
-            Text("Dont have an account ? Sign up here")
+                    child: Text("Sign in")),
+              ),
 
-          ],
+              SizedBox(height: 20),
+
+              Builder(
+                builder: (context) => GestureDetector(
+                    child: Text("Dont have an account ? Sign up here"),
+                  onTap: ()=> Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  ),
+                ),
+              )
+
+            ],
+          ),
+
         ),
-
       ),
     );
   }
