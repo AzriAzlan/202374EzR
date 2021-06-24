@@ -22,13 +22,27 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex=0;
   final Authenticate _auth = Authenticate();
 
+  void onLogout() async {
+    dynamic result = await _auth.signOut();
+
+    if(result==null) {
+      print("signout");
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return StreamProvider<List<MenuItem>>.value(
       value: DatabaseService().menu,
       child: Scaffold(
-      appBar: AppBar(
+        resizeToAvoidBottomInset: false,
+      /*appBar: AppBar(
       title: Text('EzRestaurant'),
         automaticallyImplyLeading: false,
         actions: <Widget>[
@@ -51,8 +65,49 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
 
-      ),
-        body: MenuList(),
+      ),*/
+        body: Container(
+
+          child: Column(
+            children: [
+
+              Stack(
+                children: [
+
+                  SizedBox(
+                    child: Image(
+                      image: AssetImage('assets/home_bar.png'),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 300.00, top: 30.00),
+                    child: ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                          shadowColor: MaterialStateProperty.all(Colors.transparent),
+                          foregroundColor: MaterialStateProperty.all(Colors.black),
+                      ),
+                      icon: Icon(Icons.person),
+                      label: Text("Logout"),
+                      onPressed: onLogout,
+                    ),
+                  ),
+
+                ],
+              ),
+
+              SizedBox(child: MenuList(), height: 600, width: double.maxFinite,),
+
+            ],
+          ),
+
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/bg.png"),
+                  fit: BoxFit.cover)),
+        ),
 
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
