@@ -62,9 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
       DeviceOrientation.portraitUp,
     ]);
 
-    return MaterialApp(
+    return Scaffold(
 
-      home: GestureDetector(
+     body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
@@ -77,107 +77,109 @@ class _LoginScreenState extends State<LoginScreen> {
                     image: AssetImage("assets/bg.png"),
                     fit: BoxFit.cover)),
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
 
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 150.0),
-                    child: SizedBox(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 150.0),
+                      child: SizedBox(
+                        width: 200,
+                        child: Image(
+                          image: AssetImage('assets/logo.png'),
+                        ),
+                      ),
+                    ),
+
+                    Text("WELCOME TO EZRESTAURANT", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+
+                    SizedBox(height: 30),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: SizedBox(
+                        width: 300,
+                        child: TextField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            labelText: "Username",
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            helperText: widget.usernameEmpty ? "Required":"",
+                            helperStyle: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      child: SizedBox(
+                        width: 300,
+                        child: TextField(
+                          obscureText: true,
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            helperText: widget.passwordEmpty ? "Required":"",
+                            helperStyle: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 20),
+
+                    SizedBox(
                       width: 200,
-                      child: Image(
-                        image: AssetImage('assets/logo.png'),
-                      ),
-                    ),
-                  ),
-
-                  Text("WELCOME TO EZRESTAURANT", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-
-                  SizedBox(height: 30),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: SizedBox(
-                      width: 300,
-                      child: TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          labelText: "Username",
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          helperText: widget.usernameEmpty ? "Required":"",
-                          helperStyle: TextStyle(color: Colors.red),
+                      child: TextButton(
+                        onPressed: onLogin,
+                        child: Text(
+                          "Sign In",
+                          style: TextStyle(color: Colors.black, fontSize: 25),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.white),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40.0),
+                                    side: BorderSide(color: Colors.grey)
+                                )
+                            )
                         ),
                       ),
                     ),
-                  ),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: SizedBox(
-                      width: 300,
-                      child: TextField(
-                        obscureText: true,
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          labelStyle: TextStyle(
-                            color: Colors.black,
+                    SizedBox(height: 20),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+
+                        Text("Dont have an account ? "),
+
+                        Builder(
+                          builder: (context) => GestureDetector(
+                            child: Text("Sign up here", style: TextStyle(color: Colors.blue),),
+                            onTap: ()=> Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => RegisterScreen()),
+                            ),
                           ),
-                          helperText: widget.passwordEmpty ? "Required":"",
-                          helperStyle: TextStyle(color: Colors.red),
-                        ),
-                      ),
+                        )
+
+                      ],
                     ),
-                  ),
 
-                  SizedBox(height: 20),
-
-                  SizedBox(
-                    width: 200,
-                    child: TextButton(
-                      onPressed: onLogin,
-                      child: Text(
-                        "Sign In",
-                        style: TextStyle(color: Colors.black, fontSize: 25),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.white),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  side: BorderSide(color: Colors.grey)
-                              )
-                          )
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 20),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-
-                      Text("Dont have an account ? "),
-
-                      Builder(
-                        builder: (context) => GestureDetector(
-                          child: Text("Sign up here", style: TextStyle(color: Colors.blue),),
-                          onTap: ()=> Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => RegisterScreen()),
-                          ),
-                        ),
-                      )
-
-                    ],
-                  ),
-
-                ],
+                  ],
+                ),
               ),
 
             ),

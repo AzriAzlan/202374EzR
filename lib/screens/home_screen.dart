@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return StreamProvider<List<MenuItem>>.value(
       value: DatabaseService().menu,
+      initialData: [],
       child: Scaffold(
         resizeToAvoidBottomInset: false,
       /*appBar: AppBar(
@@ -68,38 +69,41 @@ class _HomeScreenState extends State<HomeScreen> {
       ),*/
         body: Container(
 
-          child: Column(
-            children: [
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
 
-              Stack(
-                children: [
+                Stack(
+                  children: [
 
-                  SizedBox(
-                    child: Image(
-                      image: AssetImage('assets/home_bar.png'),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 300.00, top: 30.00),
-                    child: ElevatedButton.icon(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                          shadowColor: MaterialStateProperty.all(Colors.transparent),
-                          foregroundColor: MaterialStateProperty.all(Colors.black),
+                    SizedBox(
+                      child: Image(
+                        image: AssetImage('assets/home_bar.png'),
                       ),
-                      icon: Icon(Icons.person),
-                      label: Text("Logout"),
-                      onPressed: onLogout,
                     ),
-                  ),
 
-                ],
-              ),
+                    Container(
+                      padding: new EdgeInsets.only(top: 20),
+                      alignment: Alignment.topRight,
+                      child: ElevatedButton.icon(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                            shadowColor: MaterialStateProperty.all(Colors.transparent),
+                            foregroundColor: MaterialStateProperty.all(Colors.black),
+                        ),
+                        icon: Icon(Icons.person),
+                        label: Text("Logout"),
+                        onPressed: onLogout,
+                      ),
+                    ),
 
-              SizedBox(child: MenuList(), height: 600, width: double.maxFinite,),
+                  ],
+                ),
 
-            ],
+                SizedBox(child: MenuList(), height: 600, width: double.maxFinite,),
+
+              ],
+            ),
           ),
 
           constraints: BoxConstraints.expand(),
