@@ -1,8 +1,8 @@
+import 'package:ezrestaurantapp/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:ezrestaurantapp/models/menuItem.dart';
 
 class MenuTile extends StatelessWidget {
-
   final MenuItem item;
   MenuTile({this.item});
 
@@ -16,6 +16,12 @@ class MenuTile extends StatelessWidget {
           leading: CircleAvatar(
             radius: 25.0,
             backgroundColor: Colors.lightGreenAccent,
+          ),
+          trailing: GestureDetector(
+            child: Icon(Icons.add_shopping_cart),
+            onTap: () async {
+              await DatabaseService().addToCart(item.name, item.price);
+            },
           ),
           title: Text(item.name),
           subtitle: Text('Price ${item.price}'),
