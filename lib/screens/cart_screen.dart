@@ -27,10 +27,12 @@ class _CartScreenState extends State<CartScreen> {
         ),
         body: Container(
           child: SizedBox(
-            child: CartList(),
-            height: 600,
-            width: double.maxFinite,
-          ),
+                child: CartList(),
+                height: 600,
+                width: double.maxFinite,
+              ),
+
+
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
               image: DecorationImage(

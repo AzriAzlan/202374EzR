@@ -18,6 +18,38 @@ class DatabaseService {
     });
   }
 
+  Future removeFromCart(num price) async {
+   var docId;
+    await cartCollection.get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        if(result.get('price')==price){
+          docId=result.id;
+        }
+      });
+    });
+   cartCollection.doc(docId).delete().then((_) {print("removed");});
+  }
+
+  Future emptyCart() async {
+    await cartCollection.get().then((querySnapshot){
+      for(DocumentSnapshot ds in querySnapshot.docs) {
+        ds.reference.delete();
+      }
+    });
+  }
+
+  Future<int> getFromCart() async {
+    int currentSum=0;
+
+    await cartCollection.get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        int res = result.get('price');
+        currentSum = currentSum+res;
+      });
+    });
+    return currentSum;
+  }
+
   List<MenuItem> _menuItemFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return MenuItem(
